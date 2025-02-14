@@ -18,7 +18,7 @@ namespace Library.eCommerce.Services
         {
             get
             {
-                if(!Products.Any())
+                if (!Products.Any())
                 {
                     return 0;
                 }
@@ -50,16 +50,17 @@ namespace Library.eCommerce.Services
 
         public Product AddOrUpdate(Product product)
         {
-            if(product.Id == 0)
+            if (product.Id == 0)
             {
                 product.Id = LastKey + 1;
                 Products.Add(product);
             }
             else
             {
-
+                Products.Add(product);
             }
 
+            //Products.Add(product);
 
             return product;
         }

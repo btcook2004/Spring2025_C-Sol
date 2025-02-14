@@ -13,16 +13,22 @@ namespace Spring2025_P1.Models
 
         public string? Name { get; set; }
 
+        public int? Quantity { get; set; }
+
+        public double? Price { get; set; }
+
         public string? Display
         {
             get
             {
-                return $"{Id}. {Name}";
+                return $"{Id}. {Name}, {Quantity}, ${Price}";
             }
         }
         public Product()
         {
             Name = string.Empty;
+            Quantity = 1;
+            Price = 0.0;
         }
 
         public override string ToString()

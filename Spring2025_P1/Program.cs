@@ -2,6 +2,9 @@
 //Console.WriteLine("Hello, World!");
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Security.Principal;
 using Library.eCommerce.Services;
 using Spring2025_P1.Models;
 
@@ -11,9 +14,29 @@ namespace MyApp
     {
         static void Main(string[] args)
         {
+            string? role = "Z";
+            do
+            {
+                Console.WriteLine("Welcome to Amazon!");
+                Console.WriteLine("Are you an exmployee or a customer? E for Employee, C for Customer, Q to Quit");
+                role = Console.ReadLine() ?? "Z";
+                if (role[0] == 'E' || role[0] == 'e')
+                {
+                    Console.WriteLine("Mode: Employee");
+                    Employee();
+                }
+                else if (role[0] == 'C' || role[0] == 'c')
+                {
+                    Console.WriteLine("Mode: Customer");
+                    Customer();
+                }
+                else //invalid choice
+                    ;
+            } while (role[0] != 'Q' && role[0] != 'q');
+        }
 
-            Console.WriteLine("Welcome to Amazon!");
-
+        static void Employee()
+        {
             Console.WriteLine("C. Create new inventory item");
             Console.WriteLine("R. Read all inventory items");
             Console.WriteLine("U. Update an inventory item");
@@ -21,7 +44,6 @@ namespace MyApp
             Console.WriteLine("Q. Quit");
 
             List<Product?> list = ProductServiceProxy.Current.Products;
-
 
             char choice;
             do
@@ -32,40 +54,44 @@ namespace MyApp
                 {
                     case 'C':
                     case 'c':
+                        Console.Write("Enter a product name: ");
+                        string? name = Console.ReadLine() ?? string.Empty;
+                        Console.Write("Enter a quantity: ");
+                        int? quantity = int.Parse(Console.ReadLine() ?? "0");
+                        Console.Write("Enter a price: ");
+                        double? price = double.Parse(Console.ReadLine() ?? "0");
                         ProductServiceProxy.Current.AddOrUpdate(new Product
                         {
-                            Name = Console.ReadLine()
+                            Name = name,
+                            Quantity = quantity,
+                            Price = price
                         });
                         break;
                     case 'R':
                     case 'r':
-                        //print out all products in our list
-                        list.ForEach(Console.WriteLine); //same
-                        //foreach(var prod in list)  //can't do this if changing the size of list
-                        //{
-                        //    Console.WriteLine(prod);
-                        //}
+                        list.ForEach(Console.WriteLine);
                         break;
                     case 'U':
                     case 'u':
-                        //select one of the products
-                        //replace the product with the new one
                         Console.WriteLine("Which product would you like to update?");
                         int selection = int.Parse(Console.ReadLine() ?? "-1");
                         var selectedProd = list.FirstOrDefault(p => p.Id == selection);
-
-                        if(selectedProd != null)
+                        if (selectedProd != null)
                         {
-                            selectedProd.Name = Console.ReadLine() ?? "ERROR";
+                            Console.Write("Enter a new product name: ");
+                            name = Console.ReadLine() ?? string.Empty;
+                            Console.Write("Enter a new quantity: ");
+                            quantity = int.Parse(Console.ReadLine() ?? "0");
+                            Console.Write("Enter a new price: ");
+                            price = double.Parse(Console.ReadLine() ?? "0");
+                            selectedProd.Name = name;
+                            selectedProd.Quantity = quantity;
+                            selectedProd.Price = price;
                             ProductServiceProxy.Current.AddOrUpdate(selectedProd);
                         }
-                        
-
                         break;
                     case 'D':
                     case 'd':
-                        //select one of the products
-                        //throw it away
                         Console.WriteLine("Which product would you like to update?");
                         selection = int.Parse(Console.ReadLine() ?? "-1");
                         ProductServiceProxy.Current.Delete(selection);
@@ -78,14 +104,78 @@ namespace MyApp
                         break;
                 }
             } while (choice != 'Q' && choice != 'q');
-            Console.ReadLine();
-
-
+            return;
         }
-        static void AddProduct(List<string?> list)
+        static void Customer()
         {
-            var newProduct = Console.ReadLine() ?? "UNK";
-            list.Add(newProduct);
+            Console.WriteLine("S. Show all inventory items to choose from");
+            Console.WriteLine("C. Add an item from inventory to shopping cart");
+            Console.WriteLine("R. Read all items in shopping cart");
+            Console.WriteLine("U. Edit how many of a product are in shopping cart");
+            Console.WriteLine("D. Delete an item from your cart");
+            Console.WriteLine("Q. Quit");
+
+            List<Product?> inventory = ProductServiceProxy.Current.Products;
+            List<Product?> shoppingCart = ShoppingCartServiceProxy.Current.Products;
+
+            char choice;
+            do
+            {
+                string? input = Console.ReadLine() ?? "Z";
+                choice = input[0];
+                switch (choice)
+                {
+                    case 'S':
+                    case 's':
+                        Console.WriteLine("Inventory: ");
+                        inventory.ForEach(Console.WriteLine);
+                        Console.WriteLine("End of Inventory");
+                        break;
+                    case 'C':
+                    case 'c':
+                        Console.WriteLine("Which inventory item would you like to add to cart?");
+                        int selection = int.Parse(Console.ReadLine() ?? "-1");
+                        var selectedProd = ProductServiceProxy.Current.Products.FirstOrDefault(p => p.Id == selection);
+                        ShoppingCartServiceProxy.Current.AddToCart( selectedProd );
+                        break;
+                    case 'R':
+                    case 'r':
+                        shoppingCart.ForEach(Console.WriteLine);
+                        break;
+                    case 'U':
+                    case 'u':
+                        Console.WriteLine("Which product would you like change quantity?");
+                        selection = int.Parse(Console.ReadLine() ?? "-1");
+                        selectedProd = ShoppingCartServiceProxy.Current.Products.FirstOrDefault(p => p.Id == selection);
+                        Console.WriteLine("Would you like to Increase or Decrease the quantity?");
+                        string incDec = Console.ReadLine() ?? "Z";
+                        char incDecC = incDec[0];
+                        if (incDecC == 'I')
+                            ShoppingCartServiceProxy.Current.AddToCart(selectedProd);
+                        else if (incDecC == 'D')
+                            ShoppingCartServiceProxy.Current.DecrementCart(selectedProd);
+                        else
+                            Console.WriteLine("Invalid Choice");
+                        break;
+                    case 'D':
+                    case 'd':
+                        Console.WriteLine("Which product would you like to remove from your cart?");
+                        selection = int.Parse(Console.ReadLine() ?? "-1");
+                        ShoppingCartServiceProxy.Current.Delete(selection);
+                        break;
+                    case 'Q':
+                    case 'q':
+                        break;
+                    default:
+                        Console.WriteLine("Error: Unknown Command");
+                        break;
+                }
+            } while (choice != 'Q' && choice != 'q');
+            return;
+
+
+
+            return;
         }
     }
 }
