@@ -131,5 +131,31 @@ namespace Library.eCommerce.Services
                 
             return true;
         }
+
+        public double? SubTotal()
+        {
+            //iterate through shopping list and multiple quantity by price for each item
+            double? total = 0;
+            for (int i = 0; i < Products.Count; i++)
+            {
+                var product = Products[i];
+                total += product?.Quantity * product?.Price;
+            }
+
+            //make sure total only has 2 decimal places
+            total = Math.Round(total ?? 0, 2);
+            return total;
+        }
+
+        public double? GTotal()
+        {
+            return Math.Round(SubTotal() * 1.07 ?? 0, 2);
+        }
+
+        public void ClearCart()
+        {
+            Products.Clear();
+        }
+
     }
 }

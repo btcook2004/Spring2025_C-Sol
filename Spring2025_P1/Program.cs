@@ -113,6 +113,7 @@ namespace MyApp
             Console.WriteLine("R. Read all items in shopping cart");
             Console.WriteLine("U. Edit how many of a product are in shopping cart");
             Console.WriteLine("D. Delete an item from your cart");
+            Console.WriteLine("O. CheckOut");
             Console.WriteLine("Q. Quit");
 
             List<Product?> inventory = ProductServiceProxy.Current.Products;
@@ -162,6 +163,22 @@ namespace MyApp
                         Console.WriteLine("Which product would you like to remove from your cart?");
                         selection = int.Parse(Console.ReadLine() ?? "-1");
                         ShoppingCartServiceProxy.Current.Delete(selection);
+                        break;
+                    case 'O':
+                    case 'o':
+                        Console.WriteLine("Receipt: ");
+                        //Console.WriteLine(shoppingCart);
+                        for (int i = 0; i < shoppingCart.Count(); i++)
+                        {
+                            //print out each item with price and quantity
+                            Console.WriteLine(shoppingCart[i]);
+                        }
+                        Console.Write("Sub-Total: $");
+                        Console.WriteLine(ShoppingCartServiceProxy.Current.SubTotal());
+                        Console.Write("Grand Total: $");
+                        Console.WriteLine(ShoppingCartServiceProxy.Current.GTotal());
+                        ShoppingCartServiceProxy.Current.ClearCart();
+                        choice = 'Q';
                         break;
                     case 'Q':
                     case 'q':
