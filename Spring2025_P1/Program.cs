@@ -17,7 +17,7 @@ namespace MyApp
             string? role = "Z";
             do
             {
-                Console.WriteLine("Welcome to Amazon!");
+                Console.WriteLine("Welcome to Amazing!");
                 Console.WriteLine("Are you an exmployee or a customer? E for Employee, C for Customer, Q to Quit");
                 role = Console.ReadLine() ?? "Z";
                 if (role[0] == 'E' || role[0] == 'e')
