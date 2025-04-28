@@ -11,13 +11,8 @@ namespace Spring2025_P1.Models
     public class Product
     {
         public int Id { get; set; }
-
         public string? Name { get; set; }
-
-        public int? Quantity { get; set; }
-
         public double? Price { get; set; }
-
         public string? Display
         {
             get
@@ -28,23 +23,18 @@ namespace Spring2025_P1.Models
         public Product()
         {
             Name = string.Empty;
-            Quantity = 1;
             Price = 0.0;
         }
-
         public override string ToString()
         {
             return Display ?? string.Empty;
         }
-
         public Product (Product p)
         {
             Id = p.Id;
             Name = p.Name;
-            Quantity = p.Quantity;
             Price = p.Price;
         }
-
         public Product(ProductDTO p)
         {
             Name = p.Name;

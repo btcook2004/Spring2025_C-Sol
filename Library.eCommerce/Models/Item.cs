@@ -15,21 +15,17 @@ namespace Library.eCommerce.Models
         public int Id { get; set; }
         public ProductDTO Product { get; set; }
         public int? Quantity { get; set; }
-
         public ICommand? AddCommand { get; set; }
         public ICommand? RemoveCommand { get; set; }
         public ICommand? IEditCommand { get; set; }
         public ICommand? IDeleteCommand { get; set; }
-
         public string Display
         {
             get
             {
-                string dis = Product?.Display ?? string.Empty;
-                return $"{dis} {Quantity}";
+                return $"{Product?.Display ?? string.Empty} {Quantity}";
             }
         }
-
         public Item()
         {
             Product = new ProductDTO();
@@ -39,33 +35,27 @@ namespace Library.eCommerce.Models
             IEditCommand = new Command(DoEdit);
             IDeleteCommand = new Command(DoDelete);
         }
-
         public override string ToString()
         {
             return $"{Product?.Display ?? string.Empty} Quantity:{Quantity}";
         }
-
         private void DoAdd()
         {
             ShoppingCartServiceProxy.Current.AddOrUpdate(this);
         }
-
         private void DoRemove()
         {
             ShoppingCartServiceProxy.Current.ReturnItem(this);
         }
-
         public void DoEdit()
         {
 
         }
-
         public void DoDelete()
         {
             int idToDelete = this.Id;
             ProductServiceProxy.Current.Delete(idToDelete);
         }
-
         public Item(Item i)
         {
             Product = new ProductDTO(i.Product);

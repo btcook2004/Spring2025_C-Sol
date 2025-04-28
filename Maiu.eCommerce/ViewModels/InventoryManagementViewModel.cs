@@ -18,9 +18,7 @@ namespace Maiu.eCommerce.ViewModels
         public Item? SelectedProduct { get; set; }
         public string Query { get; set; }
         private ProductServiceProxy _svc = ProductServiceProxy.Current;
-
         public event PropertyChangedEventHandler? PropertyChanged;
-
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             if (propertyName is null)
@@ -29,12 +27,10 @@ namespace Maiu.eCommerce.ViewModels
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         public void RefreshProductList()
         {
             NotifyPropertyChanged(nameof(Products));
         }
-
         public ObservableCollection<Item?> Products
         {
             get
@@ -44,19 +40,15 @@ namespace Maiu.eCommerce.ViewModels
                 return new ObservableCollection<Item?>(filteredList2);
             }
         }
-
         public Item? Delete()
         {
             var item = _svc.Delete(SelectedProduct?.Id ?? 0);
             NotifyPropertyChanged("Products");
             return item;
         }
-
         public void InlineSet()
         {
 
         }
     }
-
-
 }

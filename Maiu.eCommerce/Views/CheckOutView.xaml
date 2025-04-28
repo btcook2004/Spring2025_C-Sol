@@ -4,7 +4,6 @@
              x:Class="Maiu.eCommerce.Views.CheckOutView"
              Title="CheckOutView"
              NavigatedTo="ContentPage_NavigatedTo">
-
     <VerticalStackLayout>
         <ListView
             ItemsSource="{Binding Items}">

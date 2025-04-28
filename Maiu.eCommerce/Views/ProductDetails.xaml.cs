@@ -11,21 +11,17 @@ public partial class ProductDetails : ContentPage
 	{
 		InitializeComponent();
 	}
-
     public int ProductId { get; set; }
-
     private void GoBackClicked(object sender, EventArgs e)
     {
         (BindingContext as ProductViewModel).Undo();
 		Shell.Current.GoToAsync("//InventoryManagement");
     }
-
     private void OkClicked(object sender, EventArgs e)
     {
         (BindingContext as ProductViewModel).AddOrUpdate();
         Shell.Current.GoToAsync("//InventoryManagement");
     }
-
     private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
     {
         if(ProductId == 0)

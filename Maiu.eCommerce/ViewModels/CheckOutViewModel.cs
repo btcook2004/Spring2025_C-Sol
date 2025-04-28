@@ -17,31 +17,23 @@ namespace Maiu.eCommerce.ViewModels
         {
             get
             {
-                var cartItems = ShoppingCartServiceProxy.Current.CartItems.Where(p => p?.Quantity > 0);
-                return new ObservableCollection<Item?>(cartItems);
-                //return ShoppingCartServiceProxy.Current.CartItems;
+                return new ObservableCollection<Item?>(ShoppingCartServiceProxy.Current.CartItems.Where(p => p?.Quantity > 0));
             }
         }
-
         public double Subtotal
         {
             get
             {
-                double subtotal = Items.Sum(i => i?.Product.Price * i?.Quantity) ?? 0;
-                return subtotal;
+                return Items.Sum(i => i?.Product.Price * i?.Quantity) ?? 0;
             }
         }
-
         public double Grandtotal
         {
             get
             {
-                double subtotal = Items.Sum(i => i?.Product.Price * i?.Quantity) ?? 0;
-                double grandTotal = subtotal * 1.07;
-                return grandTotal;
+                return Subtotal * 1.07;
             }
         }
-
         public event PropertyChangedEventHandler? PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -51,17 +43,14 @@ namespace Maiu.eCommerce.ViewModels
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         public void RefreshTotal()
         {
             NotifyPropertyChanged(nameof(Items));
             NotifyPropertyChanged(nameof(Subtotal));
             NotifyPropertyChanged(nameof(Grandtotal));
         }
-
         public void DoCheckout()
         {
-            // clear the cart
             ShoppingCartServiceProxy.Current.ClearCart();
         }
     }

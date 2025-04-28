@@ -10,13 +10,9 @@ namespace Library.eCommerce.DTO
     public class ProductDTO
     {
         public int Id { get; set; }
-
         public string? Name { get; set; }
-
         public int? Quantity { get; set; }
-
         public double? Price { get; set; }
-
         public string? Display
         {
             get
@@ -30,12 +26,10 @@ namespace Library.eCommerce.DTO
             Quantity = 1;
             Price = 0.0;
         }
-
         public override string ToString()
         {
             return Display ?? string.Empty;
         }
-
         public ProductDTO(ProductDTO p)
         {
             Id = p.Id;

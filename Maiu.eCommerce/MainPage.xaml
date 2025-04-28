@@ -2,18 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maiu.eCommerce.MainPage">
-
     <ScrollView>
         <VerticalStackLayout>
-            
             <Label 
                 Text="{Binding Display}"
                 />
-            
             <Button
             Text="Inventory Management"
             Clicked="InventoryClicked"/>
-
             <Button
             Text="Shop"
                 Clicked="ShopClicked"/>

@@ -4,7 +4,6 @@
              x:Class="Maiu.eCommerce.Views.InventoryManagementView"
              Title="InventoryManagementView"
              NavigatedTo="ContentPage_NavigatedTo">
-             
     <VerticalStackLayout>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -34,11 +33,9 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
         <Button Text="Add" Clicked="AddClicked"/>
         <Button Text="Edit" Clicked="EditClicked"/>
         <Button Text="Delete" Clicked="DeleteClicked"/>
         <Button Text="Go Back" Clicked="CancelClicked"/>
-        
     </VerticalStackLayout>
 </ContentPage>

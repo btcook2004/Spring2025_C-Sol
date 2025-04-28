@@ -25,7 +25,6 @@ namespace Maiu.eCommerce.ViewModels
                 }
             }
         }
-
         public int? Quantity
         {
             get
@@ -40,26 +39,34 @@ namespace Maiu.eCommerce.ViewModels
                 }
             }
         }
+        public double? Price
+        {
+            get
+            {
+                return Model?.Product.Price;
+            }
+            set
+            {
+                if (Model != null && Model.Product.Price != value)
+                    Model.Product.Price = value;
+            }
+        }
         public Item? Model { get; set; }
-
         public void AddOrUpdate()
         {
             ProductServiceProxy.Current.AddOrUpdate(Model);
         }
-
         public ProductViewModel()
         {
             Model = new Item();
             cachedModel = null;
         }
-
         public ProductViewModel(Item? model)
         {
             Model = model;
             if(model != null)
                 cachedModel = new Item(model);
         }
-
         public void Undo()
         {
             ProductServiceProxy.Current.AddOrUpdate(cachedModel);

@@ -10,10 +10,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/> <!-- STORE -->
-            <ColumnDefinition/> <!-- CART  -->
-        </Grid.ColumnDefinitions>        
-        
+            <ColumnDefinition/>
+            <!-- STORE -->
+            <ColumnDefinition/>
+            <!-- CART  -->
+        </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"/>
@@ -52,7 +53,6 @@
                 <RowDefinition Height="10*"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -61,8 +61,6 @@
                 <Entry Text="{Binding Query}" Grid.Column="0"/>
                 <Button Text="Search" Grid.Column="1" Clicked="SearchClicked"/>
             </Grid>
-            
-            
             <ListView Grid.Row="1"
                 ItemsSource="{Binding ShoppingCart}"
                 SelectedItem="{Binding SelectedCartItem}"
@@ -70,7 +68,6 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <!--<Label Text="{Binding Model.Display}"/>-->
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -84,19 +81,14 @@
                                 <Label Grid.Column="2" Text="x"/>
                                 <Label Grid.Column="3" Text="{Binding Quantity}"/>
                                 <Button Grid.Column="4" Text="-" Command="{Binding RemoveCommand}" Clicked="InlineRemoveClicked"/>
-
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
-
                 </ListView.ItemTemplate>
             </ListView>
             <Button Grid.Row="2" Text="-" Clicked="RemoveFromCartClicked"/>
         </Grid>
-
         <Button Grid.Row="1" Grid.Column="0" Text="Go Back" Clicked="GoBackClicked"/>
         <Button Grid.Row="1" Grid.Column="1" Text="Check Out" Clicked="CheckOutClicked"/>
-
     </Grid>
-
 </ContentPage>
