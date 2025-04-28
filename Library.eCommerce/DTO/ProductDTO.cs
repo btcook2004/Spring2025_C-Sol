@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Library.eCommerce.DTO;
+using Spring2025_P1.Models;
 
-namespace Spring2025_P1.Models
+namespace Library.eCommerce.DTO
 {
-    public class Product
+    public class ProductDTO
     {
         public int Id { get; set; }
 
@@ -25,7 +24,7 @@ namespace Spring2025_P1.Models
                 return $"{Id}. {Name}, ${Price}";
             }
         }
-        public Product()
+        public ProductDTO()
         {
             Name = string.Empty;
             Quantity = 1;
@@ -37,15 +36,14 @@ namespace Spring2025_P1.Models
             return Display ?? string.Empty;
         }
 
-        public Product (Product p)
+        public ProductDTO(ProductDTO p)
         {
             Id = p.Id;
             Name = p.Name;
             Quantity = p.Quantity;
             Price = p.Price;
         }
-
-        public Product(ProductDTO p)
+        public ProductDTO (Product p)
         {
             Name = p.Name;
             Id = p.Id;

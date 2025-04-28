@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maiu.eCommerce.Views.CheckOutView"
+             Title="CheckOutView"
+             NavigatedTo="ContentPage_NavigatedTo">
+
+    <VerticalStackLayout>
+        <ListView
+            ItemsSource="{Binding Items}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="{Binding Product.Name}"/>
+                            <Label Grid.Column="1" Text="{Binding Quantity}"/>
+                            <Label Grid.Column="2" Text="$"/>
+                            <Label Grid.Column="3" Text="{Binding Product.Price}"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Text="Subtoal: $" FontSize="Small"/>
+            <Label Grid.Column="1" Grid.Row="0" Text="{Binding Subtotal, StringFormat='$ {0:F2}'}" FontSize="Small"/>
+            <Label Grid.Column="0" Grid.Row="1" Text="Grand Total:" FontSize="Medium"/>
+            <Label Grid.Column="1" Grid.Row="1" Text="{Binding Grandtotal, StringFormat='$ {0:F2}'}" FontSize="Medium"/>
+        </Grid>
+        <Button Text="Complete Transaction" Clicked="CompleteClicked"/>
+        <Button Text="Go Back" Clicked="ExitSavingClicked"/>
+    </VerticalStackLayout>
+</ContentPage>
