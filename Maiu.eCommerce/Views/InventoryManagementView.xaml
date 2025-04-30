@@ -25,7 +25,7 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Text="{Binding Display}"/>
+                            <Label Grid.Column="0" Text="{Binding Model.Display}"/>
                             <Button Grid.Column="1" Text="Edit" Command="{Binding IEditCommand}" Clicked="InlineEditClicked" />
                             <Button Grid.Column="2" Text="Delete" Command="{Binding IDeleteCommand}" Clicked="InlineDeleteClicked"/>
                         </Grid>

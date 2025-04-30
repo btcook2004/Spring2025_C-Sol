@@ -24,14 +24,14 @@ namespace Maiu.eCommerce.ViewModels
         {
             get
             {
-                return Items.Sum(i => i?.Product.Price * i?.Quantity) ?? 0;
+                return ShoppingCartServiceProxy.Current.Subtotal;
             }
         }
         public double Grandtotal
         {
             get
             {
-                return Subtotal * 1.07;
+                return ShoppingCartServiceProxy.Current.Grandtotal;
             }
         }
         public event PropertyChangedEventHandler? PropertyChanged;

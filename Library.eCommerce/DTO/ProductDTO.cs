@@ -11,7 +11,6 @@ namespace Library.eCommerce.DTO
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-        public int? Quantity { get; set; }
         public double? Price { get; set; }
         public string? Display
         {
@@ -23,7 +22,6 @@ namespace Library.eCommerce.DTO
         public ProductDTO()
         {
             Name = string.Empty;
-            Quantity = 1;
             Price = 0.0;
         }
         public override string ToString()
@@ -34,7 +32,6 @@ namespace Library.eCommerce.DTO
         {
             Id = p.Id;
             Name = p.Name;
-            Quantity = p.Quantity;
             Price = p.Price;
         }
         public ProductDTO (Product p)

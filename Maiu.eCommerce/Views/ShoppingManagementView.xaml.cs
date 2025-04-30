@@ -39,6 +39,7 @@ public partial class ShoppingManagementView : ContentPage
     }
     private void SearchClicked(object sender, EventArgs e)
     {
-        (BindingContext as ShoppingManagementViewModel).RefreshUX();
+        (BindingContext as ShoppingManagementViewModel)?.Search();
+        //(BindingContext as ShoppingManagementViewModel).RefreshUX();
     }
 }

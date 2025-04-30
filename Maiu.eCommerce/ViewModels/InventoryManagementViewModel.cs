@@ -15,7 +15,7 @@ namespace Maiu.eCommerce.ViewModels
 {
     internal class InventoryManagementViewModel : INotifyPropertyChanged
     {
-        public Item? SelectedProduct { get; set; }
+        public ItemViewModel? SelectedProduct { get; set; }
         public string Query { get; set; }
         private ProductServiceProxy _svc = ProductServiceProxy.Current;
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -31,18 +31,26 @@ namespace Maiu.eCommerce.ViewModels
         {
             NotifyPropertyChanged(nameof(Products));
         }
-        public ObservableCollection<Item?> Products
+        public async Task<bool> Search()
+        {
+            await _svc.Search(Query);
+            NotifyPropertyChanged(nameof(Products));
+            return true;
+        }
+        public ObservableCollection<ItemViewModel?> Products
         {
             get
             {
-                var filteredList = _svc.Products.Where(p => p?.Product?.Name?.ToLower().Contains(Query?.ToLower() ?? string.Empty) ?? false);
-                var filteredList2 = filteredList.Where(p => p?.Quantity > 0);
-                return new ObservableCollection<Item?>(filteredList2);
+                var filteredList = _svc.Products
+                    .Where(p => p?.Product?.Name?.ToLower().Contains(Query?.ToLower() ?? string.Empty) ?? false)
+                    .Select(m => new ItemViewModel(m))
+                    .Where(p => p?.Model.Quantity > 0);
+                return new ObservableCollection<ItemViewModel?>(filteredList);
             }
         }
         public Item? Delete()
         {
-            var item = _svc.Delete(SelectedProduct?.Id ?? 0);
+            var item = _svc.Delete(SelectedProduct?.Model.Id ?? 0);
             NotifyPropertyChanged("Products");
             return item;
         }

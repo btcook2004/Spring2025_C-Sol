@@ -16,7 +16,7 @@ public partial class InventoryManagementView : ContentPage
     }
 	private void EditClicked(object sender, EventArgs e)
 	{
-		var productId = (BindingContext as InventoryManagementViewModel)?.SelectedProduct?.Id;
+		var productId = (BindingContext as InventoryManagementViewModel)?.SelectedProduct?.Model.Id;
 		Shell.Current.GoToAsync($"//Product?productId={productId}");
 	}
 	private void DeleteClicked(object sender, EventArgs e)
@@ -33,11 +33,11 @@ public partial class InventoryManagementView : ContentPage
     }
     private void SearchClicked(object sender, EventArgs e)
     {
-		(BindingContext as InventoryManagementViewModel)?.RefreshProductList();
+		(BindingContext as InventoryManagementViewModel)?.Search();
     }
     private void InlineEditClicked(object sender, EventArgs e)
     {
-		(BindingContext as InventoryManagementViewModel)?.InlineSet();
+		//(BindingContext as InventoryManagementViewModel)?.InlineSet();
 		Shell.Current.GoToAsync("//Product");
     }
     private void InlineDeleteClicked(object sender, EventArgs e)
